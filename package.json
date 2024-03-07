@@ -1,0 +1,19 @@
+{
+  "name": "js_nasa_proxy",
+  "version": "1.0.0",
+  "description": "This is a training project to learn Node.js - [NASA API](https://api.nasa.gov/) proxy server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/a-prakaptsova/js_nasa_proxy.git"
+  },
+  "author": "a.prakaptsova@godeltech.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/a-prakaptsova/js_nasa_proxy/issues"
+  },
+  "homepage": "https://github.com/a-prakaptsova/js_nasa_proxy#readme"
+}
