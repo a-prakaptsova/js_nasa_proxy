@@ -1,25 +1,18 @@
-const https = require('https');
+const moment = require('moment');
+const axios = require('axios');
 
-const DEFAULT_ENCODING = 'utf8';
+const DATE_FORMAT = 'YYYY-MM-DD';
 
-const START_DATE = '2024-03-04';
-const END_DATE = '2024-03-08';
+const START_DATE = moment().day(1).format(DATE_FORMAT);
+const END_DATE = moment().day(5).format(DATE_FORMAT);
 
 const API_KEY = '0bo6YpVVWO1hHYtK8gHw82nyz9cReQZBJjeR4XiV';
 const GET_ASTEROIDS_URL = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${START_DATE}&end_date=${END_DATE}&api_key=${API_KEY}`;
 
 const getAllAsteroidsInPeriod = () => {
-    https.get(GET_ASTEROIDS_URL, (res) => {
-        res.setEncoding(DEFAULT_ENCODING);
-        let body = '';
-
-        res.on("data", (chunk) => {
-            body += chunk;
-        });
-
-        res.on('end', () => {
-            printResults(body);
-        });
+    axios.get(GET_ASTEROIDS_URL)
+    .then((responce) => {
+        printResults(responce.data);
     })
 }
 
@@ -32,9 +25,8 @@ const printAsteroidCountToConsole = (asteroidCount) => {
 }
 
 const printResults = (data) => {
-    const asteroids = JSON.parse(data);
-    printJsonToConsole(asteroids);
-    printAsteroidCountToConsole(asteroids.element_count);
+    printJsonToConsole(data);
+    printAsteroidCountToConsole(data.element_count);
 }
 
 getAllAsteroidsInPeriod();
