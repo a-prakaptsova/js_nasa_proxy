@@ -1,19 +1,24 @@
-const moment = require('moment');
+const { previousFriday, previousMonday, format } = require("date-fns");
 const axios = require('axios');
+require('dotenv').config();
 
-const DATE_FORMAT = 'YYYY-MM-DD';
+const END_DATE = previousFriday(new Date());
+const START_DATE = previousMonday(END_DATE);
 
-const START_DATE = moment().day(1).format(DATE_FORMAT);
-const END_DATE = moment().day(5).format(DATE_FORMAT);
-
-const API_KEY = '0bo6YpVVWO1hHYtK8gHw82nyz9cReQZBJjeR4XiV';
-const GET_ASTEROIDS_URL = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${START_DATE}&end_date=${END_DATE}&api_key=${API_KEY}`;
+const START_DATE_FORMATTED = format(START_DATE, process.env.DATE_FORMAT);
+const END_DATE_FORMATTED = format(END_DATE, process.env.DATE_FORMAT);
 
 const getAllAsteroidsInPeriod = () => {
-    axios.get(GET_ASTEROIDS_URL)
-    .then((responce) => {
-        printResults(responce.data);
+    axios.get(process.env.GET_ASTEROIDS_URL, {
+        params: {
+            start_date: START_DATE_FORMATTED,
+            end_date: END_DATE_FORMATTED,
+            api_key: process.env.API_KEY
+        }
     })
+        .then((responce) => {
+            printResults(responce.data);
+        })
 }
 
 const printJsonToConsole = (data) => {
@@ -21,7 +26,7 @@ const printJsonToConsole = (data) => {
 }
 
 const printAsteroidCountToConsole = (asteroidCount) => {
-    console.log(`From ${START_DATE} to ${END_DATE} were seen ${asteroidCount} asteroid(s).`);
+    console.log(`From ${START_DATE_FORMATTED} to ${END_DATE_FORMATTED} were seen ${asteroidCount} asteroid(s).`);
 }
 
 const printResults = (data) => {
