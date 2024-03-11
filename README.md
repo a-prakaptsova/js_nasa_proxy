@@ -7,4 +7,4 @@ This is a training project to learn Node.js - [NASA API](https://api.nasa.gov/) 
 Command for runnimg application:
 
 ```sh
-node ./src/index.js
+node ./src/server.js
