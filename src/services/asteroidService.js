@@ -1,6 +1,8 @@
 const axios = require('axios');
 const logger = require('../utils/logger');
 const dates = require('../utils/dateHelper');
+const Exception = require('../utils/exceptions/Exception');
+const mapAsteroidsData = require('../utils/asteroidsMapper')
 
 const getAsteroidsInPeriod = () => {
     return axios.get(process.env.GET_ASTEROIDS_URL, {
@@ -11,12 +13,13 @@ const getAsteroidsInPeriod = () => {
         }
     })
         .then((resp) => {
-            logger.log(JSON.stringify(resp.data, null, 2));
+            const mappedAsteroidData = mapAsteroidsData(resp.data);
+            logger.log(JSON.stringify(mappedAsteroidData, null, 2));
             logger.log(`From ${dates.START_DATE} to ${dates.END_DATE} were seen ${resp.data.element_count} asteroid(s).`);
-            return resp.data;
+            return mappedAsteroidData;
         })
         .catch((err) => {
-            throw new Exception(500, err.message);
+            throw new Exception(err.code || 500, err.message);
         })
 }
 
