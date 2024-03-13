@@ -2,10 +2,12 @@ require('dotenv').config();
 const express = require('express');
 const logger = require('./utils/logger');
 const asteroidRouter = require('./routes/asteroidsRouter');
+const boolParser = require('express-query-boolean');
 const app = express();
 
 const PORT = process.env.PORT || 8000;
 
+app.use(boolParser());
 app.use((req, res, next) => {
     res.setHeader("Content-Type", "application/json");
     next();
