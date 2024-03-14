@@ -3,14 +3,15 @@ const logger = require('../utils/logger');
 const calculateRequestDates = require('../utils/dateHelper');
 const Exception = require('../utils/exceptions/Exception');
 const mapAsteroidsData = require('../utils/asteroidsMapper')
+const config = require('../config/config')
 
 const getAsteroidsInPeriod = (params) => {
     const dates = calculateRequestDates(params.startDate, params.endDate);
-    return axios.get(process.env.GET_ASTEROIDS_URL, {
+    return axios.get(config.nasaApi.getAsteroidsUrl, {
         params: {
             start_date: dates.startDate,
             end_date: dates.endDate,
-            api_key: process.env.API_KEY
+            api_key: config.nasaApi.apiKey
         }
     })
         .then((resp) => {
