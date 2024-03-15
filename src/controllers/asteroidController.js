@@ -2,8 +2,7 @@ const getAsteroids = require('../services/asteroidService')
 
 const getAsteroidsInPeriod = (req, res, next) => {
     getAsteroids(getQueryParams(req))
-        .then(data => res.status(200)
-            .json(data))
+        .then(data => res.json(data))
         .catch(error => next(error));
 }
 

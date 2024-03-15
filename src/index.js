@@ -1,18 +1,15 @@
-require('dotenv').config();
 const express = require('express');
+const config = require('./config/config');
 const logger = require('./utils/logger');
 const asteroidRouter = require('./routes/asteroidsRouter');
+const photoRouter = require('./routes/roverPhotoRouter');
 const boolParser = require('express-query-boolean');
 const app = express();
 
-const PORT = process.env.PORT || 8000;
-
+app.use(express.json());
 app.use(boolParser());
-app.use((req, res, next) => {
-    res.setHeader("Content-Type", "application/json");
-    next();
-});
-app.use('/', asteroidRouter);
+app.use('/meteors', asteroidRouter);
+app.use('/photo', photoRouter);
 app.use((err, req, res, next) => {
     logger.error(err);
     next(err);
@@ -26,6 +23,6 @@ app.use('*', (req, res) =>
     res.status(404).json({ message: 'Page not found' }),
 );
 
-app.listen(PORT, (error) => {
-    error ? console.error(error) : console.log(`Server is running on the port ${PORT}`);
+app.listen(config.port, (error) => {
+    error ? console.error(error) : console.log(`Server is running on the port ${config.port}`);
 });

@@ -64,3 +64,22 @@ node ./src/index.js
   ]
 }
 ```
+
+#### Post user data
+
+```http
+  POST /photo
+```
+
+#### Request body example
+
+```json
+{
+    "user_id": 12345,
+    "user_name": "Name",
+    "api_key": "some_valid_nasa_api_key"
+}
+```
+
+#### Response example
+The most recent image from the rover
