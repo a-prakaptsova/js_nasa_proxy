@@ -7,7 +7,10 @@ const config = {
         getRoverManifestUrl: process.env.NASA_BASE_URL + process.env.GET_ROVER_MANIFEST_URL,
         apiKey: process.env.API_KEY
     },
-    defaultDataFormat: process.env.DATE_FORMAT,
+    dateFormats: {
+        defaultDateFormat: process.env.DATE_FORMAT,
+        joiDateFormat: process.env.JOI_DATE_FORMAT
+    },
     port: process.env.PORT || 8000
 }
 
