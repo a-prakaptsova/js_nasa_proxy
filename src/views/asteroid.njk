@@ -1,0 +1,9 @@
+<div>Asteroid Id: {{asteroid.id}}</div>
+<div>Asteroid Name: {{asteroid.name}}</div>
+<div>Diameter in meters: from {{asteroid.diameter_in_meters.estimated_diameter_min}} to {{asteroid.diameter_in_meters.estimated_diameter_max}}</div>
+<div>Is potentially hazardous asteroid: {{asteroid.is_potentially_hazardous_asteroid}}</div>
+<div>Close approach date: 
+    {% for data in asteroid.close_approach_data %}
+    {{data.close_approach_date_full}}, with relative velocity {{data.relative_velocity}};
+    {% endfor %}
+</div>
