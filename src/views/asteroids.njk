@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<head>
+    <title>Asteroids</title>
+</head>
+<body>
+    <h2>Your search found the following:</h2>
+    {% if asteroidsData.were_dangerous_asteroid %}
+        <p>Were dangerous asteroids found: {{asteroidsData.were_dangerous_asteroid}}</p>
+    {% endif %}
+    {% if asteroidsData.count %}
+        <p>Total number of asteroids found during the period: {{asteroidsData.count}}</p>
+    {% else %}
+        <h3>Asteroids:</h3>
+        <ul>
+            {% for asteroid in asteroidsData.asteroids %}
+                <li>{% include "asteroid.njk" %}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>

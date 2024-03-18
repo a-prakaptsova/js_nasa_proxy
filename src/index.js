@@ -2,6 +2,7 @@ const express = require('express');
 const boolParser = require('express-query-boolean');
 const Sentry = require("@sentry/node");
 const { nodeProfilingIntegration } = require("@sentry/profiling-node");
+const nunjucks = require('nunjucks');
 const config = require('./config/config');
 const asteroidRouter = require('./routes/asteroidsRouter');
 const photoRouter = require('./routes/roverPhotoRouter');
@@ -20,6 +21,12 @@ Sentry.init({
     tracesSampleRate: 1.0,
     profilesSampleRate: 1.0,
   });
+
+nunjucks.configure(__dirname + '/views', {
+    autoescape: true,
+    express: app,
+    noCache: true
+});
 
 app.use(Sentry.Handlers.requestHandler());
 app.use(Sentry.Handlers.tracingHandler());
