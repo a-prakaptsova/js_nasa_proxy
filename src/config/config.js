@@ -11,7 +11,8 @@ const config = {
         defaultDateFormat: process.env.DATE_FORMAT,
         joiDateFormat: process.env.JOI_DATE_FORMAT
     },
-    port: process.env.PORT || 8000
+    port: process.env.PORT || 8000,
+    sentryDsn: process.env.SENTRY_DSN
 }
 
 module.exports = config;
