@@ -1,14 +1,12 @@
 const logger = require('../utils/logger');
 
 const pageNotFoundHandler = (req, res) => {
-    res.status(404).json({ message: 'Page not found' });
+    res.status(404).render('pageNotFound.njk');
 }
 
 const exceptionHandler = (err, req, res, next) => {
-    res.status(err.status || 500).json({
-        message: err.message
-    });
-}
+    res.status(err.status || 500).render('exception.njk', { errorMsg: err.message })
+};
 
 const errorLogger = (err, req, res, next) => {
     logger.error(err);

@@ -1,5 +1,6 @@
 const express = require('express');
 const boolParser = require('express-query-boolean');
+const nunjucks = require('nunjucks');
 const config = require('./config/config');
 const asteroidRouter = require('./routes/asteroidsRouter');
 const photoRouter = require('./routes/roverPhotoRouter');
@@ -7,6 +8,12 @@ const {exceptionHandler, pageNotFoundHandler, errorLogger} = require('./middlewa
 const validateQuery = require('./middleware/validator');
 const schemas = require('./validators/schemas/schema');
 const app = express();
+
+nunjucks.configure(__dirname + '/views', {
+    autoescape: true,
+    express: app,
+    noCache: true
+});
 
 app.use(express.json());
 app.use(boolParser());
