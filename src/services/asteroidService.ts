@@ -4,20 +4,24 @@ import { Exception } from '../utils/exceptions/Exception';
 import { mapAsteroidsData } from '../utils/asteroidsMapper';
 import { config } from '../config/config';
 import type { AsteroidNasaData, AsteroidQueryParams, AsteroidResponse } from '../utils/types/asteroid';
+import { resolveException } from '../utils/exceptionResolver';
 
 export const getAsteroidsInPeriod = async (params: AsteroidQueryParams): Promise<AsteroidResponse> => {
     try {
-        const dates = calculateRequestDates(params.start_date, params.end_date);
-        const resp = await axios.get<AsteroidNasaData>(config.nasaApi.getAsteroidsUrl, {
+        const datesForApiCall = calculateRequestDates(params.start_date, params.end_date);
+        const asteroidNasaData = await axios.get<AsteroidNasaData>(config.nasaApi.getAsteroidsUrl, {
             params: {
-                start_date: dates.startDate,
-                end_date: dates.endDate,
+                start_date: datesForApiCall.startDate,
+                end_date: datesForApiCall.endDate,
                 api_key: config.nasaApi.apiKey
             }
         });
-        return mapAsteroidsData(resp.data, mapStringToBoolean(params.count), mapStringToBoolean(params.were_dangerous_asteroids));
+        if (!asteroidNasaData.data) {
+            throw new Exception(404, "There is no asteroid data in NASA");
+        }
+        return mapAsteroidsData(asteroidNasaData.data, mapStringToBoolean(params.count), mapStringToBoolean(params.were_dangerous_asteroids));
     } catch (err) {
-        throw new Exception(err.response ? err.response.status : 500, err.message);
+        return resolveException(err);
     }
 };
 
