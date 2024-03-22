@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "outDir": "build",
+        "target": "es6",
+        "strictNullChecks": true
+    },
+    "typeRoots": ["src/global.d.ts", "./node_modules/@types"],
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "**/*.spec.ts"],
+    "strict": true
+}
